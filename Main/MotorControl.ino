@@ -19,8 +19,17 @@ void ProcessMotor() {
   SetSpeed(Motors);
 }
 
+void PrintMotorSpeed(int *motors) {
+  for (int i=0; i<4; i++) {
+    Serial.print(motors[i]);
+    Serial.print("  ");
+  }
+  Serial.println();
+}
+
 int SetSpeed(int* motors) {
   Constrains(motors);
+//  PrintMotorSpeed(motors);
   for (int i=0; i<4; i++) {
     if (motors[i]>=0) {
       analogWrite(MotorInput[i], motors[i]);

@@ -1,4 +1,5 @@
 #include <PS2X_lib.h>
+#include <SimpleKalmanFilter.h>
 
 const byte MotorInput[4] = {12, 3, 8, 5};
 const byte MotorOutput[4] = {13, 2, 9, 6};

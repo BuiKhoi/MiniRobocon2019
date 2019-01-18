@@ -1,13 +1,37 @@
+SimpleKalmanFilter Ch0(10, 10, 5);
+SimpleKalmanFilter Ch1(10, 10, 5);
+SimpleKalmanFilter Ch2(10, 10, 5);
+
+void PrintChannels() {
+  Serial.print(Channels[0]);
+  Serial.print("  ");
+  Serial.print(Channels[1]);
+  Serial.print("  ");
+  Serial.print(Channels[2]);
+  Serial.println("  ");
+}
+
 void GetControllerState() {
   Serial.println("Scanning");
   //Scan all button state for new events
   ps2x.read_gamepad(false, 0);
   if (true) {
     //Analog read
-    Channels[0] = map(ps2x.Analog(PSS_LY), 256, 0, MIN_SPEED, MAX_SPEED);
-    Channels[1] = map(ps2x.Analog(PSS_LX), 0, 256, MIN_SPEED, MAX_SPEED);
-    Channels[2] = map(ps2x.Analog(PSS_RX), 0, 256, MIN_SPEED, MAX_SPEED);
+    Channels[0] = map(ps2x.Analog(PSS_LY), 256, 0, -255, 255);
+    Channels[0] = Ch0.updateEstimate(Channels[0]);
+    Channels[1] = map(ps2x.Analog(PSS_LX), 0, 256, -255, 255);
+    Channels[1] = Ch1.updateEstimate(Channels[1]);
+    Channels[2] = map(ps2x.Analog(PSS_RX), 0, 256, -255, 255);
+    Channels[2] = Ch2.updateEstimate(Channels[2]);
     Channels[2] /= 1.5;
+
+    for (int i=0; i<3; i++) {
+      if (abs(Channels[i]) <= 100) {
+        Channels[i] = 0;
+      }
+    }
+    
+    PrintChannels();
 
     //Moving buttons
     bool temp = ps2x.Button(PSB_TRIANGLE);
