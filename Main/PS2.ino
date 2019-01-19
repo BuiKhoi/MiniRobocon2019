@@ -25,6 +25,15 @@ void GetControllerState() {
     Channels[2] = Ch2.updateEstimate(Channels[2]);
     Channels[2] /= 1.5;
 
+    int sum = 0;
+    for (int i=0; i<3; i++) {
+      sum+=abs(Channels[i]);
+    }
+    sum/3;
+    if (sum<30) {
+      sys_start = millis();
+    }
+
     for (int i=0; i<3; i++) {
       if (abs(Channels[i]) <= 100) {
         Channels[i] = 0;

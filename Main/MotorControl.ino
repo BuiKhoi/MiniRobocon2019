@@ -47,30 +47,39 @@ void StopAllMotors() {
 }
 
 void Constrains(int *motors) {
+  int TEMP_MAX_SPEED = 0;
+  if (millis() - sys_start < 600) {
+    TEMP_MAX_SPEED = (float)(MAX_SPEED * ((millis() - sys_start)) / 100);
+  } else {
+    TEMP_MAX_SPEED = MAX_SPEED;
+  }
+
+  int TEMP_MIN_SPEED = -TEMP_MAX_SPEED;
+  
   /*Gotta make sure every value is vaild*/
-  int temp = MIN_SPEED;
+  int temp = TEMP_MIN_SPEED;
   for (int i=0; i<4; i++) {
     if (motors[i]>temp) {
       temp = motors[i];
     }
   }
 
-  if (temp>MAX_SPEED) {
-    float ratio = (float)MAX_SPEED/temp;
+  if (temp>TEMP_MAX_SPEED) {
+    float ratio = (float)TEMP_MAX_SPEED/temp;
     for (int i=0; i<4; i++) {
       motors[i]*=ratio;
     }
   }
 
-  temp = MAX_SPEED;
+  temp = TEMP_MAX_SPEED;
   for (int i=0; i<4; i++) {
     if (motors[i]<temp) {
       temp = motors[i];
     }
   }
 
-  if (temp<MIN_SPEED) {
-    float ratio = (float)MIN_SPEED/temp;
+  if (temp<TEMP_MIN_SPEED) {
+    float ratio = (float)TEMP_MIN_SPEED/temp;
     for (int i=0; i<4; i++) {
       motors[i]*=ratio;
     }

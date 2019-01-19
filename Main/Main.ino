@@ -32,6 +32,8 @@ int PS2_CMD      = 15;  //15
 int PS2_SEL      = 17;  //16
 int PS2_CLK      = 16;  //17
 
+long long int sys_start = 0;
+
 void setup() {
   Serial.begin(9600);
   for (int i=0; i<4; i++) {
@@ -56,6 +58,7 @@ void setup() {
   while (type != 1);
   BLDC.attach(4);
   BLDC.writeMicroseconds(1000);
+  sys_start = millis();
   SystemInit();
   Serial.println("System started");
 }
