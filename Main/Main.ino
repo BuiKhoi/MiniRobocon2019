@@ -17,7 +17,7 @@ int MAX_SPEED = MAX_DEFINE_SPEED;
 int MIN_SPEED = -MAX_SPEED;
 
 int Channels[3] = {0, 0, 0};
-bool Butt[7] = {false};
+bool Butt[8] = {false};
 
 PS2X ps2x;
 int error = 0;

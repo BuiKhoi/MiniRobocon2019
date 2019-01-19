@@ -79,5 +79,19 @@ void ProcessRelay(int index) {
           MIN_SPEED = -MAX_SPEED;
         }
       }
+
+      case 7: {
+        static bool count = false;
+        if (Butt[7]) {
+          count = !count;
+        }
+        if (count) {
+          MAX_SPEED = 120;
+          MIN_SPEED = -MAX_SPEED;
+        } else {
+          MAX_SPEED = MAX_DEFINE_SPEED;
+          MIN_SPEED = -MAX_SPEED;
+        }
+      }
   }
 }

@@ -31,7 +31,7 @@ void GetControllerState() {
       }
     }
     
-    PrintChannels();
+//    PrintChannels();
 
     //Moving buttons
     bool temp = ps2x.Button(PSB_TRIANGLE);
@@ -74,6 +74,12 @@ void GetControllerState() {
     if (temp != Butt[6]) {
       Butt[6] = temp;
       ProcessRelay(6);
+    }
+
+    temp = ps2x.Button(PSB_PAD_LEFT);
+    if (temp != Butt[7]) {
+      Butt[7] = temp;
+      ProcessRelay(7);
     }
   }
 }
