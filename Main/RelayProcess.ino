@@ -93,5 +93,16 @@ void ProcessRelay(int index) {
           MIN_SPEED = -MAX_SPEED;
         }
       }
+      case 8: {
+        static bool count = false;
+        if (Butt[8]) {
+          count = !count;
+        }
+        if (count) {
+          BLDC.writeMicroseconds(2000);
+        } else {
+          BLDC.writeMicroseconds(1000);
+        } 
+      }
   }
 }

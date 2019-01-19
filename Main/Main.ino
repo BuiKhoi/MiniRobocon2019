@@ -1,5 +1,8 @@
 #include <PS2X_lib.h>
 #include <SimpleKalmanFilter.h>
+#include <Servo.h>
+
+Servo BLDC;
 
 const byte MotorInput[4] = {12, 3, 8, 5};
 const byte MotorOutput[4] = {13, 2, 9, 6};
@@ -17,7 +20,7 @@ int MAX_SPEED = MAX_DEFINE_SPEED;
 int MIN_SPEED = -MAX_SPEED;
 
 int Channels[3] = {0, 0, 0};
-bool Butt[8] = {false};
+bool Butt[9] = {false};
 
 PS2X ps2x;
 int error = 0;
@@ -51,6 +54,8 @@ void setup() {
   }
   type = ps2x.readType();
   while (type != 1);
+  BLDC.attach(4);
+  BLDC.writeMicroseconds(1000);
   SystemInit();
   Serial.println("System started");
 }

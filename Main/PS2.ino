@@ -81,5 +81,11 @@ void GetControllerState() {
       Butt[7] = temp;
       ProcessRelay(7);
     }
+
+    temp = ps2x.Button(PSB_SQUARE);
+    if (temp != Butt[8]) {
+      Butt[8] = temp;
+      ProcessRelay(8);
+    }
   }
 }
