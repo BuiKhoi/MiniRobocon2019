@@ -23,24 +23,34 @@ void GetControllerState() {
     Channels[1] = Ch1.updateEstimate(Channels[1]);
     Channels[2] = map(ps2x.Analog(PSS_RX), 0, 256, -255, 255);
     Channels[2] = Ch2.updateEstimate(Channels[2]);
-    Channels[2] /= 1.5;
 
-    int sum = 0;
-    for (int i=0; i<3; i++) {
-      sum+=abs(Channels[i]);
-    }
-    sum/3;
-    if (sum<30) {
-      sys_start = millis();
-    }
-
-    for (int i=0; i<3; i++) {
+    for (int i = 0; i < 3; i++) {
       if (abs(Channels[i]) <= 100) {
         Channels[i] = 0;
       }
     }
-    
-//    PrintChannels();
+
+    int sum = 0;
+    for (int i = 0; i < 3; i++) {
+      sum += abs(Channels[i]);
+    }
+    sum /= 3;
+    if (sum < 20) {
+      sys_start = millis();
+    }
+
+    Channels[2] /= 3.5; //Càng tăng là tốc độ quay càng giảm
+    if (millis() - sys_start < 400) { //Khoảng thời gian băm (đây là 400 ms)
+      Channels[2] = (float)(Channels[2] * ((millis() - sys_start + 310)) / 710); // Chỗ 400 là điểm bắt đầu, 800 là điểm kết thúc, 
+      //làm sao cho điểm bắt đầu + thời gian ở dòng trên ( dòng 43) bằng thời gian kết thúc là được, điểm bắt đầu càng tăng
+      //thì lực khi bắt đầu xoay càng mạnh ( càng giật ) nhưng càng đầm, xét thời gian cho kỹ.
+    }
+
+    if (Channels[0] < -10 && (millis() - sys_start < 220)) {
+      Channels[2] -= 35;
+    }
+
+    //    PrintChannels();
 
     //Moving buttons
     bool temp = ps2x.Button(PSB_TRIANGLE);
@@ -66,7 +76,7 @@ void GetControllerState() {
       Butt[3] = temp;
       ProcessRelay(3);
     }
-    
+
     temp = ps2x.Button(PSB_PAD_UP);
     if (temp != Butt[4]) {
       Butt[4] = temp;

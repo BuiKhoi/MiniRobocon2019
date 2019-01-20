@@ -7,12 +7,12 @@ Servo BLDC;
 const byte MotorInput[4] = {12, 3, 8, 5};
 const byte MotorOutput[4] = {13, 2, 9, 6};
 
-const byte ArmUp = 39;
-const byte ArmDown = 41;
+const byte ArmUp = 23;
+const byte ArmDown = 25;
 const byte Hand = 35;
 const byte Pullout = 37;
-const byte Handout = 25;
-const byte Handin = 23;
+const byte Handout = 39;
+const byte Handin = 41;
 
 #define MAX_DEFINE_SPEED 90
 

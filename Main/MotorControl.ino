@@ -48,8 +48,8 @@ void StopAllMotors() {
 
 void Constrains(int *motors) {
   int TEMP_MAX_SPEED = 0;
-  if (millis() - sys_start < 600) {
-    TEMP_MAX_SPEED = (float)(MAX_SPEED * ((millis() - sys_start)) / 100);
+  if (millis() - sys_start < 400) {
+    TEMP_MAX_SPEED = (float)(MAX_SPEED * ((millis() - sys_start + 800)) / 1200);
   } else {
     TEMP_MAX_SPEED = MAX_SPEED;
   }
